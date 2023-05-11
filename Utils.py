@@ -31,6 +31,7 @@ def random_walk_sample(G, sample_num, path_length, start):
                     if (abs(ld[0]) <= 100 and abs(ld[1]) <= 100):
                         path[i].extend(rd)
                         ld_index = get_vocabindex(ld)
+                        # ld_index = ld
                         path_pos.append(ld_index)
                 else:
                     # print("采样数不足！重新采样")
@@ -47,7 +48,7 @@ def random_walk_sample(G, sample_num, path_length, start):
                     break
         path_pos.reverse()
         rw.append(path_pos)
-    return (rw)
+    return rw
 
 
 def get_pos(G, node):
@@ -194,13 +195,16 @@ def get_dataset(G, K, L):
                 declist = [0] * (maxdegree + 1)
                 for i in range(len(ccw)):
                     declist[i] = get_vocabindex(ccw[i])
+                    # declist[i] = ccw[i]
                 declist[len(ccw)] = 40401
                 decset.append(declist)
                 validlen.append(len(ccw))
     encset = torch.as_tensor(encset, dtype=torch.long)
     decset = torch.as_tensor(decset, dtype=torch.long)
+    # encset = torch.Tensor(encset)
+    # decset = torch.Tensor(decset)
     validlen = torch.as_tensor(validlen, dtype=torch.int32)
 
     return encset, decset, validlen
 
-
+# print(get_vocabindex([0,0],100))
